@@ -2,35 +2,12 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Main Page</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="scripts/jquery-3.4.1.min.js"></script>
+        <script src="scripts/script.js"></script>
+        <title>Steganography App</title>
     </head>
-    <style>
-        .header-wrap {
-            text-align: center;
-        }
-        .content {
-            width: 100%;
-            display: table-row;
-        }
-        .sidebar {
-            width: 50%; 
-            display:table-cell;
-        }
-        .workspace {
-            width: 50%;
-            display:table-cell;
-            height: auto;
-            /*border-style: solid;*/
-        }
-        .img-container {
-            overflow: auto;
-        }
-        img {
-            width: 200%;
-            height: auto
-            overflow: auto;
-        }
-    </style>
     <body>
         <div class="header-wrap">
             <h1>Steganography Application</h1>
@@ -39,11 +16,16 @@
         <div class="content">
             <div class="sidebar">
                 <h2>Sidebar</h2>
+                <form action="#" id="Form" enctype="multipart/form-data">
+                    <input type="file" name="UploadFile" id="UploadFile" accept="image/jpeg,image/jpg,image/png"><br>
+                    <input type="file" name="UploadToEnc" id="UploadToEnc" accept="image/jpeg,image/jpg,image/png"><br>
+                    <input type="text" name="TextMessage" id="TextMessage"><br>
+                </form>
             </div>
             <div class="workspace">
                 <h2>Image</h2>
                 <div class="img-container">
-                    <img src="img/Rio.jpg" alt="Image failed to load">
+                    <img src="#" alt="Image failed to load" id="OriginalImg">
                 </div>
             </div>
         </div>
