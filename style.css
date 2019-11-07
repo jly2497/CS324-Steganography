@@ -1,0 +1,28 @@
+body {
+    font-family: 'Open Sans',sans-serif;
+}
+.header-wrap {
+    text-align: center;
+}
+.content {
+    width: 100%;
+    display: table-row;
+}
+.sidebar {
+    width: 50%; 
+    display:table-cell;
+}
+.workspace {
+    width: 50%;
+    display:table-cell;
+    height: auto;
+    /*border-style: solid;*/
+}
+.img-container {
+    overflow: auto;
+}
+img {
+    width: 200%;
+    height: auto
+    overflow: auto;
+}
