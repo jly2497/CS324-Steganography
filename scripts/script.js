@@ -1,12 +1,19 @@
 $(document).ready(function() {
     $('#UploadFile').on('change', function(e) {
-            readURL(this,$("#OriginalImg"));
-            
-            var filename = $(this).val().split('\\').pop();
-            var filesize = BytesToKiloBytes(this.files[0].size);
+        readURL(this,$("#OriginalImg"));
+          
+        var filenameOrg = $(this).val().split('\\').pop();
+        var filesizeOrg = BytesToKiloBytes(this.files[0].size);
     });
     $('#UploadToEnc').on('change', function(e) {
-                    
+		readURL(this,$("#EncodeImg"));
+		
+		var filenameEnc = $(this).val().split('\\').pop();
+        var filesizeEnc = BytesToKiloBytes(this.files[0].size);
+    });
+	$('#Reset').on('click', function(e) {
+        $("#OriginalImg").hide();
+		$("#EncodeImg").hide();
     });
 });
 function readURL(input,display) {
@@ -19,6 +26,7 @@ function readURL(input,display) {
         };
 
         reader.readAsDataURL(input.files[0]);
+		display.show();
     }
 }
 function BytesToKiloBytes(input) {
