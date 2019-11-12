@@ -19,13 +19,19 @@
                 <form action="#" id="Form" enctype="multipart/form-data">
                     <input type="file" name="UploadFile" id="UploadFile" accept="image/jpeg,image/jpg,image/png"><br>
                     <input type="file" name="UploadToEnc" id="UploadToEnc" accept="image/jpeg,image/jpg,image/png"><br>
-                    <input type="text" name="TextMessage" id="TextMessage"><br>
+                    <div class="enc-container">
+						<img src="#" alt="Image failed to load" id="EncodeImg" hidden>
+					</div>
+					<textarea name="TextMessage" id="TextMessage" form="Form">Enter text to encode here...</textarea><br>
+					<input type="submit" name="Encode" id="Encode" value="Encode"><br>
+					<input type="submit" name="Decode" id="Decode" value="Decode"><br>
+					<input type="reset" name="reset" id="Reset">
                 </form>
             </div>
             <div class="workspace">
                 <h2>Image</h2>
                 <div class="img-container">
-                    <img src="#" alt="Image failed to load" id="OriginalImg">
+                    <img src="#" alt="Image failed to load" id="OriginalImg" hidden>
                 </div>
             </div>
         </div>
