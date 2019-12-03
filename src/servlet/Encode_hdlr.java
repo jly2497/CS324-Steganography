@@ -13,10 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-@WebServlet(
-        name = "EncodeHandler",
-        urlPatterns = {"/encode"}
-    )
 @MultipartConfig(location="/Users/JoshuaLySoumphont/Desktop/Steganography", fileSizeThreshold=1024*1024,maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
 public class Encode_hdlr extends HttpServlet {
 	
