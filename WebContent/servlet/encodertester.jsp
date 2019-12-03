@@ -16,7 +16,7 @@
 			} else { out.print("<p>Error Message is blank</p>"); }
 		} else { out.print("<p>Error Message is null</p>"); }
 	%>
-	<form action="/Steganography/Encode" id="Form" method="post" enctype="multipart/form-data">
+	<form action="./Encode" id="Form" method="post" enctype="multipart/form-data">
 		<input type="file" name="UploadFile" accept="image/jpeg,image/jpg,image/png"><br>
 		
 		<select name="TextOrImage">
