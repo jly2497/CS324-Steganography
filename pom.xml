@@ -46,7 +46,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.1</version>
 				<configuration>
-					<warSourceDirectory>target</warSourceDirectory>
+					<warSourceDirectory>WebContent</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<webappDirectory>Steganography</webappDirectory>
 					<warName>Steganography</warName>
