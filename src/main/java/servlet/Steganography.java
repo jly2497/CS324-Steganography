@@ -1,4 +1,4 @@
-package steganography;
+package servlet;
 /*
  *@author  Tyler Evans
  *@version 1
