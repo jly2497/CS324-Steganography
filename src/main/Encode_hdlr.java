@@ -1,4 +1,4 @@
-package servlet;
+package main;
 
 import javax.servlet.http.*;
 
@@ -13,10 +13,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-@WebServlet(
+/*@WebServlet(
 		name = "Encode",
 		urlPatterns = "/Encode"
-)
+)*/
 @MultipartConfig(location="/Users/JoshuaLySoumphont/Desktop/Steganography", fileSizeThreshold=1024*1024,maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
 public class Encode_hdlr extends HttpServlet {
 	
@@ -96,6 +96,12 @@ public class Encode_hdlr extends HttpServlet {
 			//factory.setRepository(new File("/Desktop"));
 			
 			
+	}
+	
+	//Get file extension
+	public String getExtension(String name) {
+		String[] arr = name.split("\\.",0);
+		return arr[arr.length - 1];
 	}
 	
 	//Checks if all user inputs are valid to process

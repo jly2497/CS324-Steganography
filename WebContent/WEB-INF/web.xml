@@ -15,7 +15,7 @@
   <!-- Encode Hdlr -->
   <servlet>  
   	<servlet-name>Encode</servlet-name>  
-  	<servlet-class>servlet.Encode_hdlr</servlet-class>  
+  	<servlet-class>main.Encode_hdlr</servlet-class>  
   </servlet>  
   <servlet-mapping>  
   	<servlet-name>Encode</servlet-name>  
