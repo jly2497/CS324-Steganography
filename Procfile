@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar webapp-runner.jar --port $PORT Steganography.war
+web: java $JAVA_OPTS -jar target/dependencies/webapp-runner.jar --port $PORT target/Steganography.war
