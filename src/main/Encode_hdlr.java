@@ -13,11 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-/*@WebServlet(
-		name = "Encode",
-		urlPatterns = "/Encode"
-)*/
-@MultipartConfig(location="/Users/JoshuaLySoumphont/Desktop/Steganography", fileSizeThreshold=1024*1024,maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
+@MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
 public class Encode_hdlr extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -39,6 +35,9 @@ public class Encode_hdlr extends HttpServlet {
 			
 			filePart.write(fileName);
 			
+			Set<String> paths = getServletContext().getResourcePaths("/");
+			Iterator<String> it = paths.iterator();
+			
 			PrintWriter out = response.getWriter();
 			
 			String docType = "<!DOCTYPE html>";
@@ -46,8 +45,16 @@ public class Encode_hdlr extends HttpServlet {
 					+ "<html>\n"
 					+ "  <head><title>Encode Handler</title></head>\n"
 					+ "  <body bgcolor=\"#f0f0f0\">\n"
-					//+ 	 	attrToString(request)
-					+ "  </body>\n"
+					+ 	 	"<p>Real Path = " + getServletContext().getRealPath("/") + "</p>\n"
+					+ 	 	"<p>Working Directory = " + System.getProperty("user.dir") + "</p>\n"
+					+		"<img src='" + fileName + "'></img>"
+			);
+			
+			while(it.hasNext()) {
+				out.print("<p>" + it.next() + "</p>\n");
+			}
+			
+			out.print("  </body>\n"
 					+ "</html>\n");
 			out.close();
 			out.flush();
