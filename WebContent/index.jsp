@@ -4,13 +4,20 @@
 <%
 String LogIn;
 String LogOut;
-if (session.getAttribute("Username") == null) {
+String imgPath;
+if (session.getAttribute("Username") == "" || session.getAttribute("Username") == null) {
 	LogIn = "";
 	LogOut = "hidden";
 } else {
 	LogIn = "hidden";
 	LogOut = "";
 }
+if (session.getAttribute("EncodedOutput") == "" ||session.getAttribute("EncodedOutput") == null) {
+	imgPath = "#";
+} else {
+	imgPath = "/web/images/tmp/out.png";
+}
+
 %>
 <!DOCTYPE html>
 <html>
@@ -69,7 +76,7 @@ if (session.getAttribute("Username") == null) {
 					<option value="image">Encode Image</option>
 				</select><br>
 				
-				<div class="file-container" id="file-container" hidden="true">
+				<div class="file-container" id="file-container">
 					<label for="UploadToEnc">Upload Image to hide:</label>
 					<input type="file" name="UploadToEnc" id="UploadToEnc" accept="image/jpeg,image/jpg,image/png" data-max-size=5242880><br>
 					<img src="#" alt="Image failed to load" id="EncodeImg" hidden="true">
@@ -92,7 +99,7 @@ if (session.getAttribute("Username") == null) {
 		<div class="workspace">
 			<h2>Image</h2>
 			<div class="img-container">
-				<img src="#" alt="Image failed to load" id="OriginalImg" hidden="true"> 
+				<img src="<%=imgPath %>" alt="Image failed to load" id="OriginalImg" hidden="true"> 
 				<!-- <img src="web/images/tmp/out.png" id="EncodedImg" hidden="true"></img> -->
 			</div>
 		</div>

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/image")
+@WebServlet("/encoded.png")
 public class ImageDisplay extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public class ImageDisplay extends HttpServlet {
 		//int imageId = Integer.parseInt(request.getParameter("imageId"));
 		ServletOutputStream out = response.getOutputStream();  
 
-		FileInputStream fin = new FileInputStream(System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp.png");
+		FileInputStream fin = new FileInputStream(System.getProperty("user.dir") + "/WebContent/web/images/tmp/out.png");
 
 		BufferedInputStream bin = new BufferedInputStream(fin);  
 		BufferedOutputStream bout = new BufferedOutputStream(out);  

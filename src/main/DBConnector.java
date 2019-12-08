@@ -200,4 +200,21 @@ public class DBConnector {
 		}
 		return false;
 	}
+	public static void main(String[] args)  {
+		StandardPBEStringEncryptor enc = new StandardPBEStringEncryptor();
+		enc.setPassword("*&%Y(*$#&UHETDF)hjeoiwty3829(*"); 
+		Properties prop = new Properties();
+		
+		System.out.print(enc.encrypt("metalclaw369"));
+		
+		try {
+			FileInputStream in = new FileInputStream("config.properties");
+			prop.load(in);
+		} catch(FileNotFoundException e) {
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

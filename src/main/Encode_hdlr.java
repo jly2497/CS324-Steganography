@@ -47,9 +47,18 @@ public class Encode_hdlr extends HttpServlet {
 				
 				encoder.encode(System.getProperty("user.dir") + "/WebContent/web/images/tmp", 
 					"tmp", "png","out", text);
+				ServletLogger.log(this,"User input accepted- processing image...");
+				
 			} else {
+				ServletLogger.log(this,"Is completely written: " + isCompletelyWritten(new File(System.getProperty("user.dir") + "/WebContent/web/images/tmp/out.png")));
 				//Image into image encoder
 			}
+			session.setAttribute("EncodedOutput", "Encoded");
+			
+			//ServletLogger.log(this,"Steganography Complete- redirecting to home.");
+			//response.sendRedirect(request.getContextPath());
+			//return;
+			
 			
 			PrintWriter out = response.getWriter();
 			
@@ -62,7 +71,7 @@ public class Encode_hdlr extends HttpServlet {
 					+ "	</head>\n"
 					+ " <body bgcolor=\"#f0f0f0\">\n"
 					+ "		<div class='imgContainer'>"
-					+ "			<img src='./image'></img>"
+					+ "			<img src='./encoded.png'></img>"
 					+ "		</div>"
 					+ "		<button>Return</button>"
 					+ "		<button>Replay</button>"
@@ -75,9 +84,9 @@ public class Encode_hdlr extends HttpServlet {
 			out.close();
 			out.flush();
 			
-			ServletLogger.log(this,"User input accepted- processing steganography...");
 			//response.sendRedirect(request.getContextPath() + "/out");
 		} else {
+			session.setAttribute("EncodedOutput", "");
 			ServletLogger.log(this,"User input validation failed- redirecting to home.");
 			response.sendRedirect(request.getContextPath());
 			return;
@@ -120,6 +129,24 @@ public class Encode_hdlr extends HttpServlet {
 			//factory.setRepository(new File("/Desktop"));
 			
 			
+	}
+	private boolean isCompletelyWritten(File file) {
+	    RandomAccessFile stream = null;
+	    try {
+	        stream = new RandomAccessFile(file, "rw");
+	        return true;
+	    } catch (Exception e) {
+	    	ServletLogger.log(this,"Skipping file " + file.getName() + " for this iteration due it's not completely written.");
+	    } finally {
+	        if (stream != null) {
+	            try {
+	                stream.close();
+	            } catch (IOException e) {
+	            	ServletLogger.log(this,"Exception during closing file " + file.getName());
+	            }
+	        }
+	    }
+	    return false;
 	}
 	
 	//Get file extension

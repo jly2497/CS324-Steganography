@@ -1,9 +1,12 @@
 $(document).ready(function() {
+	$('#file-container').hide();
+	
 	$('#Form').on('submit', function(e) {
-		e.preventDefault();
+		//e.preventDefault();
 
-		var formData = new FormData($(this)[0]);
-
+		//var formData = new FormData($(this)[0]);
+		
+		/*
 		$.ajax({
 			url: "/Steganography/encode_hdlr",
 			type: "post",
@@ -18,9 +21,7 @@ $(document).ready(function() {
 			//var time = new Date().getTime();
 			//console.log(time);
 			$('#OriginalImg').attr('src','web/images/tmp/out.png');
-			
-			
-		});
+		});*/
 	});
 	
 	$('#UploadFile').on('change', function(e) {
