@@ -2,24 +2,14 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>Steganography</display-name>
   
-  <!-- EncodeTester -->
+  <!-- Registration page -->
   <servlet>
-  	<servlet-name>EncodeTester</servlet-name>
-  	<jsp-file>/web/encodertester.jsp</jsp-file>
+  	<servlet-name>Register</servlet-name>
+  	<jsp-file>/web/register.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>EncodeTester</servlet-name>
-  	<url-pattern>/tester</url-pattern>
-  </servlet-mapping>
-  
-  <!-- Encode Hdlr -->
-  <servlet>  
-  	<servlet-name>Encode</servlet-name>  
-  	<servlet-class>main.Encode_hdlr</servlet-class> 
-  </servlet>  
-  <servlet-mapping>  
-  	<servlet-name>encode</servlet-name>  
-  	<url-pattern>/encode</url-pattern>  
+  	<servlet-name>Register</servlet-name>
+  	<url-pattern>/register</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>

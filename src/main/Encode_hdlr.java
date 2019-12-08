@@ -8,21 +8,24 @@ import javax.servlet.annotation.WebServlet;
 
 import java.io.*;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 
+@WebServlet("/encode_hdlr")
 @MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
 public class Encode_hdlr extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	public Encode_hdlr() {
+		super();
+	}
 	
 	//Handle POST request
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException,FileNotFoundException {  
 		
 		HttpSession session = request.getSession(true);
 		session.setAttribute("ErrorMessage","");
+		session.setAttribute("FileName","");
 		
 		ServletLogger.log(this,"Handling POST request:\n" + attrToString(request));
 		
@@ -33,36 +36,50 @@ public class Encode_hdlr extends HttpServlet {
 			Part filePart = request.getPart("UploadFile");
 			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 			
-			filePart.write(fileName);
+			String path = System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp.png";
+			ServletLogger.log(this,"Uploading image to: " + path);
+			filePart.write(path);
 			
-			Set<String> paths = getServletContext().getResourcePaths("/");
-			Iterator<String> it = paths.iterator();
+			if (request.getParameter("TextOrImage").equals("text")) {
+				String text = request.getParameter("TextToEnc");
+				ServletLogger.log(this,"Encode Text selected, processing text... \n" + text);
+				Steganography encoder = new Steganography();
+				
+				encoder.encode(System.getProperty("user.dir") + "/WebContent/web/images/tmp", 
+					"tmp", "png","out", text);
+			} else {
+				//Image into image encoder
+			}
 			
 			PrintWriter out = response.getWriter();
 			
 			String docType = "<!DOCTYPE html>";
 			out.print(docType 
-					+ "<html>\n"
-					+ "  <head><title>Encode Handler</title></head>\n"
-					+ "  <body bgcolor=\"#f0f0f0\">\n"
-					+ 	 	"<p>Real Path = " + getServletContext().getRealPath("/") + "</p>\n"
-					+ 	 	"<p>Working Directory = " + System.getProperty("user.dir") + "</p>\n"
-					+		"<img src='" + fileName + "'></img>"
+					+ "	<html>\n"
+					+ " <head><title>Encode Handler</title>\n"
+					+ "		<link href='https://fonts.googleapis.com/css?family=Open+Sans&amp;display=swap' rel='stylesheet'>\n"
+					+ "		<link rel='stylesheet' type='text/css' href='web/style/style.css'>\n"
+					+ "	</head>\n"
+					+ " <body bgcolor=\"#f0f0f0\">\n"
+					+ "		<div class='imgContainer'>"
+					+ "			<img src='./image'></img>"
+					+ "		</div>"
+					+ "		<button>Return</button>"
+					+ "		<button>Replay</button>"
+					+ "		<button>View Logs</button>"
+					+ "		<button>Download</button>"
 			);
 			
-			while(it.hasNext()) {
-				out.print("<p>" + it.next() + "</p>\n");
-			}
-			
-			out.print("  </body>\n"
+			out.print("</body>\n"
 					+ "</html>\n");
 			out.close();
 			out.flush();
 			
 			ServletLogger.log(this,"User input accepted- processing steganography...");
+			//response.sendRedirect(request.getContextPath() + "/out");
 		} else {
-			ServletLogger.log(this,"User input validation failed- redirecting to back index");
-			response.sendRedirect(request.getContextPath() + "/Tester");
+			ServletLogger.log(this,"User input validation failed- redirecting to home.");
+			response.sendRedirect(request.getContextPath());
 			return;
 		}
 		
@@ -128,11 +145,11 @@ public class Encode_hdlr extends HttpServlet {
 						ServletLogger.log(this,"Error Message Log: There must be a file uploaded to encode.");
 					}
 				} else if (request.getParameter("TextOrImage").equals("text")) { //Handle text encode
-					if (!request.getParameter("TextToEnc").equals("") || request.getParameter("TextToEnc").length() > 255) {
+					if (!request.getParameter("TextToEnc").equals("") || request.getParameter("TextToEnc").length() > 500) {
 						return true;
 					} else {
-						session.setAttribute("ErrorMessage", "Text within the text area must be within 0 to 255 characters.");
-						ServletLogger.log(this,"Error Message Log: Text within the text area must be within 0 to 255 characters.");
+						session.setAttribute("ErrorMessage", "Text within the text area must be within 0 to 500 characters.");
+						ServletLogger.log(this,"Error Message Log: Text within the text area must be within 0 to 500 characters.");
 					}
 				} else {
 					session.setAttribute("ErrorMessage", "Image/Text Encode error.");

@@ -9,7 +9,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/JoshuaLySoumphont/Downloads/jsch-0.1.55.jar"/>
-	<classpathentry kind="lib" path="/Users/JoshuaLySoumphont/Downloads/jasypt-1.9.3/lib/jasypt-1.9.3.jar"/>
-	<classpathentry kind="output" path="target/classes"/>
+	<classpathentry kind="lib" path="C:/Users/Joshua Ly Soumphont/git/Steganography/WebContent/WEB-INF/lib/mysql-connector-java-8.0.18.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasypt-1.9.3.jar"/>
+	<classpathentry kind="output" path="build"/>
 </classpath>
