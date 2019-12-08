@@ -3,8 +3,6 @@ body {
 	  font-size: 100%;
 	  line-height: 175%;
 	  margin: 0 15% 0;
-		background-image: url("backgroundimage.jpg");
-		color: white;
 }
 .header-wrap {
     text-align: center;
