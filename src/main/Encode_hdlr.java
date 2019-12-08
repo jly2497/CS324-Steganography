@@ -71,7 +71,7 @@ public class Encode_hdlr extends HttpServlet {
 					+ "	</head>\n"
 					+ " <body bgcolor=\"#f0f0f0\">\n"
 					+ "		<div class='imgContainer'>"
-					+ "			<img src='./encoded.png'></img>"
+					+ "			<img src='./encoded.png' width='200'></img>"
 					+ "		</div>"
 					+ "		<button>Return</button>"
 					+ "		<button>Replay</button>"

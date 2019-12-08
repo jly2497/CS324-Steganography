@@ -12,11 +12,6 @@ if (session.getAttribute("Username") == "" || session.getAttribute("Username") =
 	LogIn = "hidden";
 	LogOut = "";
 }
-if (session.getAttribute("EncodedOutput") == "" ||session.getAttribute("EncodedOutput") == null) {
-	imgPath = "#";
-} else {
-	imgPath = "/web/images/tmp/out.png";
-}
 
 %>
 <!DOCTYPE html>
@@ -62,7 +57,7 @@ if (session.getAttribute("EncodedOutput") == "" ||session.getAttribute("EncodedO
 					if (session.getAttribute("ErrorMessage") != null) {
 						if (!session.getAttribute("ErrorMessage").equals(""))  {
 							out.print("<p>" + session.getAttribute("ErrorMessage") + "</p>"); 
-						} else { out.print("<p>Error Message is blank</p>"); }
+						}
 					}
 				%>
 			</div>
@@ -99,7 +94,7 @@ if (session.getAttribute("EncodedOutput") == "" ||session.getAttribute("EncodedO
 		<div class="workspace">
 			<h2>Image</h2>
 			<div class="img-container">
-				<img src="<%=imgPath %>" alt="Image failed to load" id="OriginalImg" hidden="true"> 
+				<img src="#" alt="Image failed to load" id="OriginalImg" hidden="true"> 
 				<!-- <img src="web/images/tmp/out.png" id="EncodedImg" hidden="true"></img> -->
 			</div>
 		</div>
