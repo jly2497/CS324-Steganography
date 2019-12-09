@@ -31,7 +31,7 @@ public class Encode_hdlr extends HttpServlet {
 		
 		
 		if (requestHandler(request)) {
-			response.setContentType("text/html");
+			//response.setContentType("text/html");
 			
 			Part filePart = request.getPart("UploadFile");
 			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
@@ -42,25 +42,37 @@ public class Encode_hdlr extends HttpServlet {
 			
 			if (request.getParameter("TextOrImage").equals("text")) {
 				String text = request.getParameter("TextToEnc");
-				ServletLogger.log(this,"Encode Text selected, processing text... \n" + text);
+				ServletLogger.log(this,"Encode Text selected, processing text: " + text);
 				Steganography encoder = new Steganography();
 				
 				encoder.encode(System.getProperty("user.dir") + "/WebContent/web/images/tmp", 
 					"tmp", "png","out", text);
-				ServletLogger.log(this,"User input accepted- processing image...");
+				ServletLogger.log(this,"Steganography complete, exiting Encode_hdlr");
 				
-			} else {
-				ServletLogger.log(this,"Is completely written: " + isCompletelyWritten(new File(System.getProperty("user.dir") + "/WebContent/web/images/tmp/out.png")));
-				//Image into image encoder
+			} else {				//Image into image encoder
+				Part hide = request.getPart("UploadToEnc");
+				String hideName = Paths.get(hide.getSubmittedFileName()).getFileName().toString();
+				ServletLogger.log(this,"Encode Image selected, processing image: " + hideName);
+				
+				String hidePath = System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp2.png";
+				
+				ServletLogger.log(this,"Uploading secret image to: " + hidePath);
+				hide.write(hidePath);
+				
+				StegoCodec encoder = new StegoCodec();
+				encoder.encodeImage(path, hidePath);
+				ServletLogger.log(this,"Steganography complete, exiting Encode_hdlr");
 			}
-			session.setAttribute("EncodedOutput", "Encoded");
+			session.setAttribute("ImageOutput", "Encoded");
 			
 			//ServletLogger.log(this,"Steganography Complete- redirecting to home.");
 			//response.sendRedirect(request.getContextPath());
 			//return;
 			
 			
-			PrintWriter out = response.getWriter();
+			//PrintWriter out = response.getWriter();
+			
+			/*
 			
 			String docType = "<!DOCTYPE html>";
 			out.print(docType 
@@ -80,11 +92,11 @@ public class Encode_hdlr extends HttpServlet {
 			);
 			
 			out.print("</body>\n"
-					+ "</html>\n");
-			out.close();
-			out.flush();
+					+ "</html>\n");*/
+			//out.close();
+			//out.flush();
 			
-			//response.sendRedirect(request.getContextPath() + "/out");
+			response.sendRedirect(request.getContextPath());
 		} else {
 			session.setAttribute("EncodedOutput", "");
 			ServletLogger.log(this,"User input validation failed- redirecting to home.");
@@ -129,24 +141,6 @@ public class Encode_hdlr extends HttpServlet {
 			//factory.setRepository(new File("/Desktop"));
 			
 			
-	}
-	private boolean isCompletelyWritten(File file) {
-	    RandomAccessFile stream = null;
-	    try {
-	        stream = new RandomAccessFile(file, "rw");
-	        return true;
-	    } catch (Exception e) {
-	    	ServletLogger.log(this,"Skipping file " + file.getName() + " for this iteration due it's not completely written.");
-	    } finally {
-	        if (stream != null) {
-	            try {
-	                stream.close();
-	            } catch (IOException e) {
-	            	ServletLogger.log(this,"Exception during closing file " + file.getName());
-	            }
-	        }
-	    }
-	    return false;
 	}
 	
 	//Get file extension

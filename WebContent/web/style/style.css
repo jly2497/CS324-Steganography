@@ -1,58 +1,92 @@
 body {
-    font-family: Georgia, serif;
-	  font-size: 100%;
-	  line-height: 175%;
-	  margin: 0 15% 0;
+    font-family: Open Sans, serif;
+	font-size: 100%;
+	line-height: 175%;
+	margin: 0 10%;
 }
 body, html { 
-    overflow-x: hidden; 
-    overflow-y: hidden;
+	overflow-x: hidden;
 }
 .header-wrap {
     text-align: center;
+    margin: 15;
+    white-space: nowrap;
 }
 .UserLogin {
 	text-align: center;
+	height: 50px;
+	white-space: nowrap;
+}
+.table {
 }
 .content {
-    width: 100%;
     display: table-row;
 }
 .sidebar {
-    width: 50%; 
-    display:table-cell;
+    display: table-cell;
+    min-width: 450px;
+    line-height: 3;
+    white-space: nowrap;
+    background-color: LightGray;
 }
-.enc-container img {
+.sidebar-container input {
+	text-align: right;
+}
+.sidebar-container, .workspace-container {
+	margin: 15px;
+}
+.input-container {
+	height:300px;
+}
+.small-container {
+	
+}
+.small-img {
+	width: 350px;
+	height: 200px;
+	text-align: center;
+	margin: 0 40px;
+}
+.small-img img {
+	max-width: 350px;
 	max-height: 200px;
-	max-width: 200px;
 }
 textarea {
-	width: 300px;
-	height: 150px;
+	width: 400px;
+	height: 280px;
 	
-	max-width: 300px;
-	max-height: 150px;
+	max-width: 400px;
+	max-height: 280px;
 	
 	min-width: 200px;
 	min-height: 50px;
 }
-
 .workspace {
-    width: 50%;
+    width: 100%;
     display:table-cell;
-    height: 500px;
-    /*border-style: solid;*/
+    height: 800px;
+}
+.zoom-buttons {
+	white-space: nowrap;
 }
 .img-container {
-	width: 100%;
-	height: 100%;
-	
-    overflow: auto;
+	position: absolute;
+	width: 55%;
+	height: 70%;
+    overflow-x: auto;
+    overflow-y: auto;
+    text-align: center;
+    margin: 10px;
+    border-style: dotted;
 }
 .img-container img {
-    width: 200%;
-    height: auto
-    overflow: auto;
+	width: auto;
+	height: auto;
+    position: absolute;
+	top: 50%;
+    left: 50%;
+    margin-right: 50%;
+    transform: translate(-50%, -50%);
 }
 
 a:link{

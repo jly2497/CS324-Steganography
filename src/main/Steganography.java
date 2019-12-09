@@ -69,9 +69,9 @@ public class Steganography
         }
         catch(Exception e)
         {
-            JOptionPane.showMessageDialog(null,
+            /*JOptionPane.showMessageDialog(null,
                 "There is no hidden message in this image!","Error",
-                JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);*/
             return "";
         }
     }

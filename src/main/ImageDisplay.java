@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/encoded.png")
+@WebServlet("/out.png")
 public class ImageDisplay extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -38,5 +38,4 @@ public class ImageDisplay extends HttpServlet {
 		bout.close();  
 		out.close(); 
 	}
-
 }

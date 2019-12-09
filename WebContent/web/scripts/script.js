@@ -25,9 +25,10 @@ $(document).ready(function() {
 	});
 	
 	$('#UploadFile').on('change', function(e) {
-		console.log(validType(this));
+		//console.log(validType(this));
 		if (validType(this)) {
 			readURL(this,$("#OriginalImg"));
+			$('#Decode').prop("disabled",false);
 		}
     });
     $('#UploadToEnc').on('change', function(e) {
@@ -41,6 +42,7 @@ $(document).ready(function() {
 	$('#Reset').on('click', function(e) {
         $("#OriginalImg").hide();
 		$("#EncodeImg").hide();
+		$('#Decode').prop("disabled",true);
     });
 	$('#TextOrImage').on('change', function(e) {
 		if ($('#TextOrImage').val() === "text") {
@@ -118,8 +120,10 @@ function validType(input) {
 	var fileType = file["type"];
 	var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
 	
-	if ($.inArray(fileType, validImageTypes) < 0) {
+	if ($.inArray(fileType, validImageTypes) > 0) {
 	     return true;
+	} else {
+		return false;
 	}
 }
 function submitForm() {
