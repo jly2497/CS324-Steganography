@@ -205,7 +205,7 @@ public class DBConnector {
 		enc.setPassword("*&%Y(*$#&UHETDF)hjeoiwty3829(*"); 
 		Properties prop = new Properties();
 		
-		System.out.print(enc.encrypt("metalclaw369"));
+		System.out.print(enc.encrypt("dexter"));
 		
 		try {
 			FileInputStream in = new FileInputStream("config.properties");
