@@ -25,10 +25,15 @@ $(document).ready(function() {
 	});
 	
 	$('#UploadFile').on('change', function(e) {
-        readURL(this,$("#OriginalImg"));
+		console.log(validType(this));
+		if (validType(this)) {
+			readURL(this,$("#OriginalImg"));
+		}
     });
     $('#UploadToEnc').on('change', function(e) {
-		readURL(this,$("#EncodeImg"));
+    	if (validType(this)) {
+    		readURL(this,$("#EncodeImg"));
+    	}
 		
 		//var filenameEnc = $(this).val().split('\\').pop();
         //var filesizeEnc = BytesToKiloBytes(this.files[0].size);
@@ -78,6 +83,7 @@ $(document).ready(function() {
 				}
 			}
 		}
+		
 	}
 	
 	$('#TextMessage').keyup(validateTextarea);
@@ -107,8 +113,15 @@ $(document).ready(function() {
 		}
 	}
 });
-
-
+function validType(input) {
+	var file = input.files[0];
+	var fileType = file["type"];
+	var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+	
+	if ($.inArray(fileType, validImageTypes) < 0) {
+	     return true;
+	}
+}
 function submitForm() {
 	console.log($('#text-container').val());
 }

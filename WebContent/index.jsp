@@ -51,7 +51,6 @@ if (session.getAttribute("Username") == "" || session.getAttribute("Username") =
 	
 	<div class="content">
 		<div class="sidebar">
-			<h2>Sidebar</h2>
 			<div class="Error Message">
 				<% 
 					if (session.getAttribute("ErrorMessage") != null) {
@@ -81,18 +80,20 @@ if (session.getAttribute("Username") == "" || session.getAttribute("Username") =
 					<textarea name="TextToEnc" id="TextMessage" form="Form" cols="" rows="" pattern=".[1,500]" required>Enter text to encode here...</textarea><br> 
 				</div>
 				
-				<input type="submit" name="Encode" id="Encode" value="Encode"><br>
-				<!--  <input type="submit" name="Decode" id="Decode" value="Decode"><br> -->
-				<input type="reset" name="reset" id="Reset"><br>
+				<input type="submit" name="Encode" id="Encode" value="Encode">
+				<input type="submit" name="Decode" id="Decode" value="Decode" disabled="disabled"><br>
+				<input type="reset" name="reset" id="Reset">
+				<button type="Button">Replay</button>
+				<button type="Button">Save</button>
+				<button type="Button">Gallery</button>
+				<button type="Button">View Logs</button>
 			</form>
-			<button>Replay</button>
-			<button>Save</button>
-			<button>Gallery</button>
-			<button>View Logs</button>
+			
 		</div>
 		
 		<div class="workspace">
-			<h2>Image</h2>
+			<button type="Button" disabled="disabled">Zoom-in</button>
+			<button type="Button" disabled="disabled">Zoom-out</button> <br>
 			<div class="img-container">
 				<img src="#" alt="Image failed to load" id="OriginalImg" hidden="true"> 
 				<!-- <img src="web/images/tmp/out.png" id="EncodedImg" hidden="true"></img> -->
