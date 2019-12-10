@@ -27,7 +27,6 @@ body, html {
     min-width: 450px;
     line-height: 3;
     white-space: nowrap;
-    background-color: LightGray;
 }
 .sidebar-container input {
 	text-align: right;
@@ -61,6 +60,17 @@ textarea {
 	min-width: 200px;
 	min-height: 50px;
 }
+.log-container {
+	margin: 10px;
+}
+.log-container textarea {
+	overflow-y: scroll;
+	line-height: 1.2;
+	max-width: 400px;
+	max-height: 100px;
+	min-width: 400px;
+	min-height: 100px;
+}
 .workspace {
     width: 100%;
     display:table-cell;
@@ -71,7 +81,7 @@ textarea {
 }
 .img-container {
 	position: absolute;
-	width: 55%;
+	width: 60%;
 	height: 70%;
     overflow-x: auto;
     overflow-y: auto;
@@ -87,6 +97,10 @@ textarea {
     left: 50%;
     margin-right: 50%;
     transform: translate(-50%, -50%);
+}
+.text-out {
+	text-align: center;
+	margin: 10% 0;
 }
 
 a:link{

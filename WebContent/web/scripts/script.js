@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	$('#file-container').hide();
+	readLog();
 	
 	$('#Form').on('submit', function(e) {
 		//e.preventDefault();
@@ -24,11 +25,17 @@ $(document).ready(function() {
 		});*/
 	});
 	
+	$('#ClearLog').on('click', function(e){
+		window.location.href = '/Steganography/encode_hdlr?clear=true';
+	});
+	
 	$('#UploadFile').on('change', function(e) {
 		//console.log(validType(this));
 		if (validType(this)) {
+			$('#text-out').hide();
 			readURL(this,$("#OriginalImg"));
 			$('#Decode').prop("disabled",false);
+			$('#OriginalImg').show();
 		}
     });
     $('#UploadToEnc').on('change', function(e) {
@@ -115,6 +122,24 @@ $(document).ready(function() {
 		}
 	}
 });
+function readLog() {
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", "web/log.txt", false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                $('.log-container textarea').val(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+	
 function validType(input) {
 	var file = input.files[0];
 	var fileType = file["type"];

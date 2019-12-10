@@ -9,7 +9,7 @@ public class ServletLogger {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 		LocalDateTime now = LocalDateTime.now();  
 		try {
-			File f = new File(System.getProperty("user.dir") + "/" + "log.txt");
+			File f = new File(System.getProperty("user.dir") + "/WebContent/web/" + "log.txt");
 			//System.out.println(f.exists() + " " + f.getAbsolutePath());
 			PrintWriter out = new PrintWriter(new FileOutputStream(f, true)); 
 			

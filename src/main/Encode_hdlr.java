@@ -20,6 +20,16 @@ public class Encode_hdlr extends HttpServlet {
 		super();
 	}
 	
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+		if (request.getParameter("clear") != null) {
+			File log = new File(System.getProperty("user.dir") + "/WebContent/web/log.txt");
+			PrintWriter writer = new PrintWriter(log);
+			writer.print("");
+			writer.close();
+		}
+		response.sendRedirect(request.getContextPath());
+	}
+	
 	//Handle POST request
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException,FileNotFoundException {  
 		
@@ -98,7 +108,7 @@ public class Encode_hdlr extends HttpServlet {
 			
 			response.sendRedirect(request.getContextPath());
 		} else {
-			session.setAttribute("EncodedOutput", "");
+			session.setAttribute("ImageOutput", "");
 			ServletLogger.log(this,"User input validation failed- redirecting to home.");
 			response.sendRedirect(request.getContextPath());
 			return;

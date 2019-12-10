@@ -15,33 +15,37 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans&amp;display=swap"
 	rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="web/style/style.css">
-
+<link rel="stylesheet" type="text/css" href="web/style/bootstrap.min.css">
 <script src="web/scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script src="web/scripts/script.js" type="text/javascript"></script>
 <script type="text/javascript">
+		
 		window.onload = function() {
+			$('#text-out').hide();
+			$('#OriginalImg').hide();
 			<%
 			out.print("console.log('" + session.getAttribute("ImageOutput") + "');");
-			if (session != null)
 				if (session.getAttribute("ImageOutput") != "") {
 					imgPath = "./out.png";
 					if (session.getAttribute("ImageOutput") == "Encoded") {
-						out.print("alert('Image has been hidden.');" + '\n');
-						out.print("$('OriginalImg').show();" + '\n');
-					}
-					else if (session.getAttribute("ImageOutput") == "ImageDecoded") {
+						out.print("$('#OriginalImg').show();" + '\n');
+						out.print("alert('Data has been hidden.');" + '\n');
+					} else if (session.getAttribute("ImageOutput") == "DecodeImage") {
+						out.print("$('#OriginalImg').show();" + '\n');
 						out.print("alert('Data has been extracted.');");
-						out.print("$('OriginalImg').show();" + '\n');
-					} else if (session.getAttribute("ImageOutput") == "TextDecoded") {
+						
+					} else if (session.getAttribute("ImageOutput") == "DecodeText") {
+						out.print("$('#OriginalImg').hide();" + '\n');
+						out.print("$('#text-out').show();" + '\n');
 						out.print("alert('Data has been extracted.');");
-						out.print("$('OriginalImg').hide();" + '\n');
 					} else if (session.getAttribute("ImageOutput") == "None") {
+						out.print("$('#OriginalImg').hide();" + '\n');
 						out.print("alert('No data detected in the image.');");
-						out.print("$('OriginalImg').hide();" + '\n');
 					}
 				}
 			session.setAttribute("ImageOutput",""); 
@@ -83,7 +87,7 @@
 					<div class="Error Message">
 						<%
 							if (session.getAttribute("ErrorMessage") != null) {
-								if (!session.getAttribute("ErrorMessage").equals("")) {
+								if (session.getAttribute("ErrorMessage") != "") {
 									out.print("<p>" + session.getAttribute("ErrorMessage") + "</p>");
 								}
 							}
@@ -115,7 +119,7 @@
 
 							<div class="text-container" id="text-container">
 								<textarea name="TextToEnc" id="TextMessage" form="Form" cols=""
-									rows="" pattern=".[1,500]" required>Enter text to encode here...</textarea>
+									rows="" pattern=".{1,500}" required>Enter text to encode here...</textarea>
 								<br>
 							</div>
 						</div>
@@ -123,12 +127,14 @@
 						<input type="submit" name="Encode" id="Encode" value="Encode">
 						<input type="submit" name="Decode" id="Decode" value="Decode" disabled="disabled" onclick="$('#Form').attr('action','/Steganography/decode_hdlr');">
 						<input type="reset"name="reset" id="Reset">
-						<button type="Button">Replay</button>
-						<button type="Button">Save</button>
-						<button type="Button">Gallery</button>
-						<button type="Button">View Logs</button>
+						<button type="button">Replay</button>
+						<button type="button">Download</button>
+						<button type="button">Gallery</button>
 					</form>
-
+					<div class='log-container'>
+						<textarea disabled="disabled"></textarea><br>
+						<button type="button" id="ClearLog">Clear Log</button>
+					</div>
 				</div>
 			</div>
 
@@ -136,14 +142,14 @@
 			<div class="workspace">
 				<div class="workspace-container">
 					<div class="zoom-buttons">
-						<button type="Button" disabled="disabled">Zoom-in</button>
-						<button type="Button" disabled="disabled">Zoom-out</button>
+						<button type="button" disabled="disabled">Zoom-in</button>
+						<button type="button" disabled="disabled">Zoom-out</button>
 					</div>
 					<div class="img-container">
-						<img src="<%=imgPath%>" alt="Image failed to load"
-							id="OriginalImg" hidden>
+						<img src="<%=imgPath%>" alt="" id="OriginalImg">
 						<!-- <img src="web/images/tmp/out.png" id="EncodedImg" hidden="true"></img> -->
 					</div>
+					<div class="text-out" id="text-out"><p><%=session.getAttribute("Message") %></p></div>
 				</div>
 			</div>
 		</div>
