@@ -21,7 +21,18 @@ public class Decode_hdlr extends HttpServlet {
     public Decode_hdlr() {
         super();
     }
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	if (request.getParameter("replay") != null) {
+    		ServletLogger.log(this,"Replay clicked, replaying previous steganography: " + attrToString(request));
+			HttpSession session = request.getSession(true);
+			
+			String rStr = (String) session.getAttribute("Replay");
+			String[] rArr = rStr.split(", ",0);
+			String textOrImage = rArr[1];
+			
+    	}
+    	
+    }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		
@@ -39,26 +50,31 @@ public class Decode_hdlr extends HttpServlet {
 				ServletLogger.log(this,"Handling POST AJAX request: " + fileName);
 				
 				filePart.write(tmpPath);
-				
-				Steganography decoder = new Steganography();
 				String path = System.getProperty("user.dir") + "/WebContent/web/images/tmp/";
-				/*String message = decoder.decode(path, "tmp");
 				
-				if (message.equals("")) {*/
-					ServletLogger.log(this,"No hidden text found, checking for hidden images.");
+				StegoCodec imgDecoder = new StegoCodec();
+				if (imgDecoder.decodeImage(path + "tmp.png")) {
+					session.setAttribute("ImageOutput","DecodedImage");
+					ServletLogger.log(this,"Image decrypted.");
+					response.sendRedirect(request.getContextPath());
+					return;
+				} else {
+					ServletLogger.log(this,"No hidden image found, attempting text decode.");
+					Steganography decoder = new Steganography();
 					
-					StegoCodec imgDecoder = new StegoCodec();
-					if (imgDecoder.decodeImage(path + "tmp.png")) {
-						session.setAttribute("ImageOutput","DecodeImage");
-						ServletLogger.log(this,"Image decrypted.");
-						response.sendRedirect(request.getContextPath());
-						return;
-					} else {
+					String message = decoder.decode(path, "tmp");
+					
+					if (message.equals("")) {
+						ServletLogger.log(this,"No hidden text found, returning.");
 						session.setAttribute("ImageOutput","None");
-						ServletLogger.log(this,"No hidden image found, exiting.");
 						response.sendRedirect(request.getContextPath());
-						return;
+					} else {
+						ServletLogger.log(this,"Hidden text decrypted: " + message);
+						session.setAttribute("ImageOutput","DecodedText");
+						session.setAttribute("Message",message);
+						response.sendRedirect(request.getContextPath());
 					}
+				}
 				/*} else {
 					ServletLogger.log(this,"Hidden text decrypted: " + message);
 					session.setAttribute("ImageOutput","DecodeText");

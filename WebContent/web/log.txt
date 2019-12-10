@@ -1,0 +1,18 @@
+2019/12/10 04:39:41 Account_hdlr -> User sign-in detected, processing user:Josh
+2019/12/10 04:39:41 DBConnector -> Checking if Josh exists in the database.
+2019/12/10 04:39:41 DBConnector -> Query: select * from user where username='Josh'
+2019/12/10 04:39:41 DBConnector -> Successfully connected to database.
+2019/12/10 04:39:41 DBConnector -> Row found. Result: Josh
+2019/12/10 04:39:41 Account_hdlr -> User sign-in accepted, logging in...
+2019/12/10 04:41:20 Account_hdlr -> User sign-in detected, processing user:Josh
+2019/12/10 04:41:20 DBConnector -> Checking if Josh exists in the database.
+2019/12/10 04:41:20 DBConnector -> Query: select * from user where username='Josh'
+2019/12/10 04:41:21 DBConnector -> Successfully connected to database.
+2019/12/10 04:41:21 DBConnector -> Row found. Result: Josh
+2019/12/10 04:41:21 Account_hdlr -> User sign-in accepted, logging in...
+2019/12/10 10:39:50 Account_hdlr -> User sign-in detected, processing user:Josh
+2019/12/10 10:39:50 DBConnector -> Checking if Josh exists in the database.
+2019/12/10 10:39:50 DBConnector -> Query: select * from user where username='Josh'
+2019/12/10 10:39:51 DBConnector -> Successfully connected to database.
+2019/12/10 10:39:51 DBConnector -> Row found. Result: Josh
+2019/12/10 10:39:51 Account_hdlr -> User sign-in accepted, logging in...

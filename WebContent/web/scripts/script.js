@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	$('#file-container').hide();
-	readLog();
 	
 	$('#Form').on('submit', function(e) {
 		//e.preventDefault();
@@ -24,18 +23,18 @@ $(document).ready(function() {
 			$('#OriginalImg').attr('src','web/images/tmp/out.png');
 		});*/
 	});
-	
 	$('#ClearLog').on('click', function(e){
 		window.location.href = '/Steganography/encode_hdlr?clear=true';
 	});
-	
 	$('#UploadFile').on('change', function(e) {
 		//console.log(validType(this));
 		if (validType(this)) {
 			$('#text-out').hide();
 			readURL(this,$("#OriginalImg"));
-			$('#Decode').prop("disabled",false);
+			$('#Decode').removeAttr('disabled');
+			$('#Download').attr('disabled','disabled');
 			$('#OriginalImg').show();
+			$('.zoom-buttons button').removeAttr('disabled');
 		}
     });
     $('#UploadToEnc').on('change', function(e) {
@@ -49,7 +48,9 @@ $(document).ready(function() {
 	$('#Reset').on('click', function(e) {
         $("#OriginalImg").hide();
 		$("#EncodeImg").hide();
-		$('#Decode').prop("disabled",true);
+		$('#Decode').attr('disabled','disabled');
+		$('#Download').attr('disabled','disabled');
+		$('.zoom-buttons button').attr('disabled','disabled');
     });
 	$('#TextOrImage').on('change', function(e) {
 		if ($('#TextOrImage').val() === "text") {
@@ -122,24 +123,19 @@ $(document).ready(function() {
 		}
 	}
 });
-function readLog() {
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", "web/log.txt", false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                $('.log-container textarea').val(allText);
-            }
-        }
-    }
-    rawFile.send(null);
+function zoomIn()
+{
+    var GFG = document.getElementById("OriginalImg");
+    var currWidth = GFG.clientWidth;
+    GFG.style.width = (currWidth + 100) + "px";
 }
 
-	
+function zoomOut()
+{
+    var GFG = document.getElementById("OriginalImg");
+    var currWidth = GFG.clientWidth;
+    GFG.style.width = (currWidth - 100) + "px";
+}
 function validType(input) {
 	var file = input.files[0];
 	var fileType = file["type"];
@@ -164,8 +160,6 @@ function readURL(input,display) {
         };
 
         reader.readAsDataURL(input.files[0]);
-        
-        console.log(input.files[0]);
         
 		display.show();
     }

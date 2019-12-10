@@ -21,12 +21,19 @@ public class Account_hdlr extends HttpServlet {
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
+    	if (request.getParameter("logout") != null) {
+    		HttpSession session = request.getSession(true);
+			session.setAttribute("Username", "");
+		}
+    	response.sendRedirect(request.getContextPath());
     }
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession(true);
 		DBConnector db;
+		
+		
 		
 		if (request.getParameter("submit").equals("Log In")) {
 			String userName = request.getParameter("Username");
@@ -37,7 +44,6 @@ public class Account_hdlr extends HttpServlet {
 				
 				if (db.userExists(userName)) {
 					ServletLogger.log(this,"User sign-in accepted, logging in...");
-					HttpSession session = request.getSession(true);
 					
 					session.setAttribute("Username", userName);
 				}
@@ -53,17 +59,17 @@ public class Account_hdlr extends HttpServlet {
 				String hashPassword = hash(request.getParameter("Password"));
 				
 				db.addUser(request.getParameter("Username"), request.getParameter("Email"), hashPassword);
+				session.setAttribute("Username", request.getParameter("Username"));
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
-			
 		} else {
-			ServletLogger.log(this,"User input validation failed- redirecting to home.");
-			response.sendRedirect(request.getContextPath());
+			ServletLogger.log(this,"User input validation failed.");
 			return;
-		}
+		} 
+		
+		response.sendRedirect(request.getContextPath());
 	}
 	private String hash(String password) {
         String hash = null;

@@ -61,7 +61,7 @@ public class StegoCodec {
      * @throws ArrayIndexOutOfBoundsException if image can not contain
      */
      
-    public void encodeImage(String imagePath, String hidImagePath) throws ArrayIndexOutOfBoundsException {
+    public boolean encodeImage(String imagePath, String hidImagePath) throws ArrayIndexOutOfBoundsException {
         try {
            this.currentImage = ImageIO.read(new File(imagePath));
         } catch (IOException e) {}
@@ -74,7 +74,7 @@ public class StegoCodec {
             e.printStackTrace();
         }
         if (!checkSize(imgBytes.length))
-            throw new ArrayIndexOutOfBoundsException();
+            return false;
         BufferedImage encoded = encode(imgBytes);
         
         File outputfile = new File(outPath);
@@ -82,6 +82,7 @@ public class StegoCodec {
         try {
            ImageIO.write(encoded, "png",outputfile);
         } catch (IOException e) {}
+        return true;
     }
 
     /**
@@ -121,7 +122,7 @@ public class StegoCodec {
         BufferedImage img = null;
         try {
             img = ImageIO.read(new ByteArrayInputStream(data));
-            if (img == null) throw new IOException();
+            if (img == null) return false;
         } catch (IOException e) {
             throw e;
         }
@@ -214,7 +215,9 @@ public class StegoCodec {
         } catch (ArrayIndexOutOfBoundsException e) {//if we extracted needed 4 bytes
             length = ByteBuffer.wrap(data).getInt();
             this.data = null;
-            this.data = new byte[length];
+            try {
+            	this.data = new byte[length];
+            } catch (NegativeArraySizeException ne) { return false; }
             this.currentByte = 0;
             this.currentBit = 7;
             setNextBit(new Color(currentImage.getRGB(i % w, i / w)).getBlue() & 1);

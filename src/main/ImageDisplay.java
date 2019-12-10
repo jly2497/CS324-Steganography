@@ -22,10 +22,18 @@ public class ImageDisplay extends HttpServlet {
 		response.setContentType("image/jpg");  
 		response.setContentType("image/png");  
 		
-		//int imageId = Integer.parseInt(request.getParameter("imageId"));
+		String image = request.getParameter("image");
+		
 		ServletOutputStream out = response.getOutputStream();  
-
-		FileInputStream fin = new FileInputStream(System.getProperty("user.dir") + "/WebContent/web/images/tmp/out.png");
+		FileInputStream fin;
+		
+		/*if (image.equals("text")) {
+			fin = new FileInputStream(System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp.png");
+		} else if (image.equals("image")){
+			fin = new FileInputStream(System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp2.png");
+		} else {*/
+			fin = new FileInputStream(System.getProperty("user.dir") + "/WebContent/web/images/tmp/out.png");
+		//}
 
 		BufferedInputStream bin = new BufferedInputStream(fin);  
 		BufferedOutputStream bout = new BufferedOutputStream(out);  

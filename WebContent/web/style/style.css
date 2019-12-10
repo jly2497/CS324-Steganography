@@ -1,11 +1,14 @@
 body {
     font-family: Open Sans, serif;
 	font-size: 100%;
-	line-height: 175%;
+	line-height: 100%;
 	margin: 0 10%;
 }
 body, html { 
 	overflow-x: hidden;
+}
+#Download.disabled {
+    pointer-events: none;
 }
 .header-wrap {
     text-align: center;
@@ -13,9 +16,25 @@ body, html {
     white-space: nowrap;
 }
 .UserLogin {
-	text-align: center;
-	height: 50px;
 	white-space: nowrap;
+}
+.UserLogin label {
+	color: white;
+	margin: 0 10px;
+}
+.login-container {
+	white-space: nowrap;
+}
+.logout-container {
+	white-space: nowrap;
+	color: white;
+	
+}
+.UserLogin label {
+	margin: 0 10px;
+}
+.LoginButtons {
+	margin: 0 20px;
 }
 .table {
 }
@@ -24,8 +43,8 @@ body, html {
 }
 .sidebar {
     display: table-cell;
-    min-width: 450px;
-    line-height: 3;
+    min-width: 470px;
+    line-height: 1.5;
     white-space: nowrap;
 }
 .sidebar-container input {
@@ -50,20 +69,20 @@ body, html {
 	max-width: 350px;
 	max-height: 200px;
 }
-textarea {
-	width: 400px;
-	height: 280px;
+.sidebar-container textarea {
+	width: 100%;
+	height: 200px;
 	
-	max-width: 400px;
-	max-height: 280px;
+	max-width: 100%;
+	max-height: 200px;
 	
-	min-width: 200px;
-	min-height: 50px;
+	min-width: 100%;
+	min-height: 200px;
 }
 .log-container {
 	margin: 10px;
 }
-.log-container textarea {
+.log-container iframe {
 	overflow-y: scroll;
 	line-height: 1.2;
 	max-width: 400px;

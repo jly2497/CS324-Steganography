@@ -26,6 +26,30 @@ public class Encode_hdlr extends HttpServlet {
 			PrintWriter writer = new PrintWriter(log);
 			writer.print("");
 			writer.close();
+		} else if (request.getParameter("replay") != null) {
+			ServletLogger.log(this,"Replay clicked, replaying previous steganography...");
+			HttpSession session = request.getSession(true);
+			
+			String rStr = (String) session.getAttribute("Replay");
+			String[] rArr = rStr.split(", ",0);
+			String textOrImage = rArr[1];
+			
+			if (textOrImage.equals("text")) {
+				String textToEnc = "";
+				for (int i = 2; i < rArr.length; i++)
+					textToEnc += rArr[i];
+				Steganography encoder = new Steganography();
+				encoder.encode(System.getProperty("user.dir") + "/WebContent/web/images/tmp", "tmp", "png","out", textToEnc);
+				session.setAttribute("ImageOutput", "Encoded");
+			} else {
+				StegoCodec encoder = new StegoCodec();
+				String path = System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp.png";
+				String hidePath = System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp2.png";
+				encoder.encodeImage(path, hidePath);
+				session.setAttribute("ImageOutput", "Encoded");
+			}
+			ServletLogger.log(this,"Replay finished");
+			response.sendRedirect(request.getContextPath());
 		}
 		response.sendRedirect(request.getContextPath());
 	}
@@ -39,12 +63,10 @@ public class Encode_hdlr extends HttpServlet {
 		
 		ServletLogger.log(this,"Handling POST request:\n" + attrToString(request));
 		
-		
 		if (requestHandler(request)) {
 			//response.setContentType("text/html");
-			
 			Part filePart = request.getPart("UploadFile");
-			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+			//String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 			
 			String path = System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp.png";
 			ServletLogger.log(this,"Uploading image to: " + path);
@@ -57,7 +79,11 @@ public class Encode_hdlr extends HttpServlet {
 				
 				encoder.encode(System.getProperty("user.dir") + "/WebContent/web/images/tmp", 
 					"tmp", "png","out", text);
+				session.setAttribute("ImageOutput", "Encoded");
 				ServletLogger.log(this,"Steganography complete, exiting Encode_hdlr");
+				
+				String replay = "encode, " + request.getParameter("TextOrImage") + ", " + text;
+				session.setAttribute("Replay",replay);
 				
 			} else {				//Image into image encoder
 				Part hide = request.getPart("UploadToEnc");
@@ -70,41 +96,16 @@ public class Encode_hdlr extends HttpServlet {
 				hide.write(hidePath);
 				
 				StegoCodec encoder = new StegoCodec();
-				encoder.encodeImage(path, hidePath);
+				if (encoder.encodeImage(path, hidePath)) {
+					session.setAttribute("ImageOutput", "Encoded");
+					String replay = "encode, " + request.getParameter("TextOrImage");
+					session.setAttribute("Replay",replay);
+				} else {
+					session.setAttribute("ImageOutput", "Error");
+					session.setAttribute("Replay","");
+				}
 				ServletLogger.log(this,"Steganography complete, exiting Encode_hdlr");
 			}
-			session.setAttribute("ImageOutput", "Encoded");
-			
-			//ServletLogger.log(this,"Steganography Complete- redirecting to home.");
-			//response.sendRedirect(request.getContextPath());
-			//return;
-			
-			
-			//PrintWriter out = response.getWriter();
-			
-			/*
-			
-			String docType = "<!DOCTYPE html>";
-			out.print(docType 
-					+ "	<html>\n"
-					+ " <head><title>Encode Handler</title>\n"
-					+ "		<link href='https://fonts.googleapis.com/css?family=Open+Sans&amp;display=swap' rel='stylesheet'>\n"
-					+ "		<link rel='stylesheet' type='text/css' href='web/style/style.css'>\n"
-					+ "	</head>\n"
-					+ " <body bgcolor=\"#f0f0f0\">\n"
-					+ "		<div class='imgContainer'>"
-					+ "			<img src='./encoded.png' width='200'></img>"
-					+ "		</div>"
-					+ "		<button>Return</button>"
-					+ "		<button>Replay</button>"
-					+ "		<button>View Logs</button>"
-					+ "		<button>Download</button>"
-			);
-			
-			out.print("</body>\n"
-					+ "</html>\n");*/
-			//out.close();
-			//out.flush();
 			
 			response.sendRedirect(request.getContextPath());
 		} else {
@@ -113,44 +114,6 @@ public class Encode_hdlr extends HttpServlet {
 			response.sendRedirect(request.getContextPath());
 			return;
 		}
-		
-		
-		//String description = request.getParameter("description");
-		
-		
-		
-		
-		//
-		
-		//InputStream fileContent = filePart.getInputStream();
-		//Path target = Paths.get("/Desktop/");
-		
-		//File image = new File("MyFile.txt");
-		//Files.copy(fileContent, target, StandardCopyOption.REPLACE_EXISTING);
-		
-		
-		//final String absolutePath = image.getAbsolutePath();
-		//log.debug(absolutePath);
-		
-		//Steganography encoder = new Steganography();
-		
-		
-		
-		/*if (ServletFileUpload.isMultipartContent(request)) {
-			out.print(docType 
-					+ "<html>\n"
-					+ "  <head><title>Encode Handler</title></head>\n"
-					+ "  <body bgcolor=\"#f0f0f0\">\n"
-					+ "	   <p>Error, file not uploaded.</p>"
-					+ "  </body>\n"
-					+ "</html>\n");
-			return;
-		} else {*/
-			//DiskFileItemFactory factory = new DiskFileItemFactory();
-			//factory.setSizeThreshold(FILE_SIZE);
-			//factory.setRepository(new File("/Desktop"));
-			
-			
 	}
 	
 	//Get file extension
