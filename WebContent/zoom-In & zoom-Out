@@ -1,0 +1,18 @@
+<button type="button" onclick="zoomin()">Zoom-in</button>
+<button type="button" onclick="zoomout()">Zoom-out</button>
+
+            <script type="text/javascript">
+                function zoomin()
+                {
+                    var GFG = document.getElementById("OriginalImg");
+                    var currWidth = GFG.clientWidth;
+                    GFG.style.width = (currWidth + 100) + "px";
+                }
+
+                function zoomout()
+                {
+                    var GFG = document.getElementById("OriginalImg");
+                    var currWidth = GFG.clientWidth;
+                    GFG.style.width = (currWidth - 100) + "px";
+                }
+            </script>
