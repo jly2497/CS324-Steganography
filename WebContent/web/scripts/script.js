@@ -71,7 +71,7 @@ $(document).ready(function() {
 	
 	function validateFileInput() {
 		if ((this.id === "UploadToEnc" && $('#file-container').is(":visible")) || this.id === "UploadFile") {
-			var errorMsg = "File size must be below 5 megabytes.";
+			var errorMsg = "File size must be below 10 megabytes.";
 			var input = this;
 			var maxSize = $(input).data('max-size');
 			

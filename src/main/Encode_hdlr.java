@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 @WebServlet("/encode_hdlr")
-@MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
+@MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=1024*1024*10, maxRequestSize=1024*1024*5*5)
 public class Encode_hdlr extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -164,7 +164,7 @@ public class Encode_hdlr extends HttpServlet {
 		String extension = split[split.length - 1];
 		
 		if (extension.equalsIgnoreCase("png")||extension.equalsIgnoreCase("jpg")||extension.equalsIgnoreCase("jpeg")) {
-			if (image.getSize() < 1024 * 1024 * 5 && image.getSize() > 1024) {
+			if (image.getSize() < 1024 * 1024 * 10 && image.getSize() > 1024) {
 				return true;
 			} else {
 				session.setAttribute("ErrorMessage","Image must be between 1KB to 5MB in size.");

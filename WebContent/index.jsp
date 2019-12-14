@@ -34,16 +34,18 @@
 		$('#OriginalImg').hide();
 		console.log('<% out.print(session.getAttribute("Username")); %>');
 		<%
+		if (session.getAttribute("ImageOutput") != null)
 			if (session.getAttribute("ImageOutput") != "") {
 				imgPath = "./out.png";
 				if (session.getAttribute("ImageOutput") == "Encoded") {
 					out.print("$('#OriginalImg').show();" + '\n');
 					out.print("$('#Download').show();" + '\n');
+					out.print("$('.zoom-buttons button').removeAttr('disabled');" + '\n');
 					out.print("alert('Data has been hidden.');" + '\n');
 				} else if (session.getAttribute("ImageOutput") == "DecodedImage") {
 					out.print("$('#OriginalImg').show();" + '\n');
 					out.print("$('#Download').show();" + '\n');
-					out.print("$('.zoom-buttons button').removeAttr('disabled');" + '\n');;
+					out.print("$('.zoom-buttons button').removeAttr('disabled');" + '\n');
 					out.print("alert('Data has been extracted.');");
 				} else if (session.getAttribute("ImageOutput") == "DecodedText") {
 					out.print("$('#text-out').show();" + '\n');
@@ -55,6 +57,7 @@
 					out.print("alert('Steganography failed- Secret image is too large to encode within the cover image.');");
 				}
 			}
+		if (session.getAttribute("Username") != null)
 			if (session.getAttribute("Username") != "") {
 				out.print("$('#Login').hide();" + '\n');
 				out.print("$('#Logout').show();" + '\n');
@@ -120,7 +123,7 @@
 						<label for="UploadFile">Upload Image:</label> 
 						<input type="file" class="form-control"
 							name="UploadFile" id="UploadFile"
-							accept="image/jpeg,image/jpg,image/png" data-max-size="5242880"
+							accept="image/jpeg,image/jpg,image/png" data-max-="5242880"
 							required><br> 
 						<label for="TextOrImage">SelectText or Image:</label> 
 						<select name="TextOrImage" id="TextOrImage" class="form-control">
@@ -133,7 +136,7 @@
 								<label for="UploadToEnc">Upload Image to hide:</label> 
 								<input class="form-control"
 									type="file" name="UploadToEnc" id="UploadToEnc"
-									accept="image/jpeg,image/jpg,image/png" data-max-size="5242880"><br>
+									accept="image/jpeg,image/jpg,image/png" data-max-="10000000"><br>
 								<div class="small-container">
 									<div class="small-img">
 										<img src="#" alt="Image failed to load" id="EncodeImg"
@@ -179,7 +182,7 @@
 						<!-- <img src="web/images/tmp/out.png" id="EncodedImg" hidden="true"></img> -->
 					</div>
 					<div class="text-out" id="text-out" style="display: none;">
-						<textarea disabled='disabled'><%=session.getAttribute("Message")%></textarea>
+						<label disabled='disabled'><%=session.getAttribute("Message")%></label>
 					</div>
 				</div>
 			</div>

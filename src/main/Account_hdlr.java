@@ -37,15 +37,19 @@ public class Account_hdlr extends HttpServlet {
 		
 		if (request.getParameter("submit").equals("Log In")) {
 			String userName = request.getParameter("Username");
+			String password = hash(request.getParameter("Password"));
+			
 			ServletLogger.log(this,"User sign-in detected, processing user:" + userName);
 			
 			try {
 				db = new DBConnector();
 				
-				if (db.userExists(userName)) {
-					ServletLogger.log(this,"User sign-in accepted, logging in...");
+				if (db.passwordMatch(userName, password)) {
+					ServletLogger.log(this,"Successfully logged in!");
 					
 					session.setAttribute("Username", userName);
+				} else {
+					ServletLogger.log(this,"Cannot log in, wrong username or password.");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

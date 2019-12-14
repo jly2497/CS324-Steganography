@@ -40,6 +40,28 @@ public class DBConnector {
 	}
 	
 	//Check if user is present in db
+	public boolean passwordMatch(String user,String password) throws SQLException {
+		ServletLogger.log(this,"Checking if " + user + " exists in the database.");
+		String query = "select * from user where username='" + user + "' and password='" + password + "'";
+		ServletLogger.log(this,"Query: " + query);
+		
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/steganography","root",encryptor.decrypt(prop.getProperty("dbpass")));
+		ServletLogger.log(this,"Successfully connected to database.");
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		
+		if (rs.next()) {
+			ServletLogger.log(this,"Row found. Result: " + rs.getString("username"));
+			close(rs,stmt,conn);
+			return true;
+		} else {
+			ServletLogger.log(this,user + " does not exist.");
+			close(rs,stmt,conn);
+			return false;
+		}
+	}
+	
+	//Check if user is present in db
 	public boolean userExists(String user) throws SQLException {
 		ServletLogger.log(this,"Checking if " + user + " exists in the database.");
 		String query = "select * from user where username='" + user + "'";
@@ -205,14 +227,19 @@ public class DBConnector {
 		enc.setPassword("*&%Y(*$#&UHETDF)hjeoiwty3829(*"); 
 		Properties prop = new Properties();
 		
-		System.out.print(enc.encrypt("dexter"));
+		//System.out.print(enc.encrypt("metalclaw369"));
 		
 		try {
 			FileInputStream in = new FileInputStream("config.properties");
 			prop.load(in);
+			DBConnector db = new DBConnector();
+			System.out.println(db.userExists("Josh"));
 		} catch(FileNotFoundException e) {
 			
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
