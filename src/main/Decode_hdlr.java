@@ -52,8 +52,9 @@ public class Decode_hdlr extends HttpServlet {
 				filePart.write(tmpPath);
 				String path = System.getProperty("user.dir") + "/WebContent/web/images/tmp/";
 				
-				StegoCodec imgDecoder = new StegoCodec();
-				if (imgDecoder.decodeImage(path + "tmp.png")) {
+				Decoder dec = new Decoder();
+
+				if (dec.steganographyImage(path + "tmp.png")) {
 					session.setAttribute("ImageOutput","DecodedImage");
 					ServletLogger.log(this,"Image decrypted.");
 					response.sendRedirect(request.getContextPath());
@@ -75,13 +76,6 @@ public class Decode_hdlr extends HttpServlet {
 						response.sendRedirect(request.getContextPath());
 					}
 				}
-				/*} else {
-					ServletLogger.log(this,"Hidden text decrypted: " + message);
-					session.setAttribute("ImageOutput","DecodeText");
-					session.setAttribute("Message",message);
-					response.sendRedirect(request.getContextPath());
-					return;
-				}*/
 		} else {
 			session.setAttribute("ImageOutput","");
 			ServletLogger.log(this,"Image failed validation, returning.");

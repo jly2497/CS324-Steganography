@@ -30,7 +30,7 @@ $(document).ready(function() {
 		//console.log(validType(this));
 		if (validType(this)) {
 			$('#text-out').hide();
-			readURL(this,$("#OriginalImg"));
+			displayImage(this,$("#OriginalImg"));
 			$('#Decode').removeAttr('disabled');
 			$('#Download').attr('disabled','disabled');
 			$('#OriginalImg').show();
@@ -39,7 +39,7 @@ $(document).ready(function() {
     });
     $('#UploadToEnc').on('change', function(e) {
     	if (validType(this)) {
-    		readURL(this,$("#EncodeImg"));
+    		displayImage(this,$("#EncodeImg"));
     	}
 		
 		//var filenameEnc = $(this).val().split('\\').pop();
@@ -96,42 +96,37 @@ $(document).ready(function() {
 		
 	}
 	
-	$('#TextMessage').keyup(validateTextarea);
+	$('#TextMessage').keyup(validateTextMessage);
 	
-	function validateTextarea() {
+	function validateTextMessage() {
 		if ($('#text-container').is(":visible")) {
-			var errorMsg = "Text must be between 1 to 500 characters.";
-			var textarea = this;
-			var pattern = new RegExp('^' + $(textarea).attr('pattern') + '$');
-			// check each line of text
+			var errorMessage = "Text must be between 1 to 500 characters.";
+			var textMessage = this;
+			var regex = new RegExp('^' + $(textMessage).attr('pattern') + '$');
 			$.each($(this).val().split("\n"), function () {
-				// check if the line matches the pattern
-				var hasError = !this.match(pattern);
-				if (typeof textarea.setCustomValidity === 'function') {
-					textarea.setCustomValidity(hasError ? errorMsg : '');
+				var match = !this.match(regex);
+				if (typeof textMessage.setCustomValidity === 'function') {
+					textMessage.setCustomValidity(match ? errorMessage : '');
 				} else {
-					$(textarea).toggleClass('error', !!hasError);
-					$(textarea).toggleClass('ok', !hasError);
-					if (hasError) {
-						$(textarea).attr('title', errorMsg);
+					$(textMessage).toggleClass('error', !!match);
+					$(textMessage).toggleClass('ok', !match);
+					if (match) {
+						$(textMessage).attr('title', errorMessage);
 					} else {
-						$(textarea).removeAttr('title');
+						$(textMessage).removeAttr('title');
 					}
 				}
-				return !hasError;
+				return !match;
 			});
 		}
 	}
 });
-function zoomIn()
-{
+function zoomIn() {
     var GFG = document.getElementById("OriginalImg");
     var currWidth = GFG.clientWidth;
     GFG.style.width = (currWidth + 100) + "px";
 }
-
-function zoomOut()
-{
+function zoomOut() {
     var GFG = document.getElementById("OriginalImg");
     var currWidth = GFG.clientWidth;
     GFG.style.width = (currWidth - 100) + "px";
@@ -150,17 +145,11 @@ function validType(input) {
 function submitForm() {
 	console.log($('#text-container').val());
 }
-function readURL(input,display) {
+function displayImage(input,display) {
     if (input.files && input.files[0]) {
-        
         var reader = new FileReader();
-
-        reader.onload = function (e) {
-            display.attr('src', e.target.result);
-        };
-
+        reader.onload = function (e) { display.attr('src', e.target.result); };
         reader.readAsDataURL(input.files[0]);
-        
 		display.show();
     }
 }

@@ -34,18 +34,24 @@ public class Encode_hdlr extends HttpServlet {
 			String[] rArr = rStr.split(", ",0);
 			String textOrImage = rArr[1];
 			
+			Encoder enc = new Encoder();
+			
 			if (textOrImage.equals("text")) {
 				String textToEnc = "";
 				for (int i = 2; i < rArr.length; i++)
 					textToEnc += rArr[i];
-				Steganography encoder = new Steganography();
-				encoder.encode(System.getProperty("user.dir") + "/WebContent/web/images/tmp", "tmp", "png","out", textToEnc);
+
+				Steganography textEnc = new Steganography();
+				textEnc.encode(System.getProperty("user.dir") + "/WebContent/web/images/tmp", "tmp", "png", textToEnc);
+				//enc.steganographyText(System.getProperty("user.dir") + "/WebContent/web/images/tmp.png", textToEnc);
+				
 				session.setAttribute("ImageOutput", "Encoded");
 			} else {
-				StegoCodec encoder = new StegoCodec();
 				String path = System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp.png";
 				String hidePath = System.getProperty("user.dir") + "/WebContent/web/images/tmp/tmp2.png";
-				encoder.encodeImage(path, hidePath);
+				//encoder.encodeImage(path, hidePath);
+				enc.steganographyImage(path,hidePath);
+				
 				session.setAttribute("ImageOutput", "Encoded");
 			}
 			ServletLogger.log(this,"Replay finished");
@@ -78,7 +84,7 @@ public class Encode_hdlr extends HttpServlet {
 				Steganography encoder = new Steganography();
 				
 				encoder.encode(System.getProperty("user.dir") + "/WebContent/web/images/tmp", 
-					"tmp", "png","out", text);
+					"tmp", "png", text);
 				session.setAttribute("ImageOutput", "Encoded");
 				ServletLogger.log(this,"Steganography complete, exiting Encode_hdlr");
 				
@@ -95,8 +101,9 @@ public class Encode_hdlr extends HttpServlet {
 				ServletLogger.log(this,"Uploading secret image to: " + hidePath);
 				hide.write(hidePath);
 				
-				StegoCodec encoder = new StegoCodec();
-				if (encoder.encodeImage(path, hidePath)) {
+				Encoder enc = new Encoder();
+				
+				if (enc.steganographyImage(path, hidePath)) {
 					session.setAttribute("ImageOutput", "Encoded");
 					String replay = "encode, " + request.getParameter("TextOrImage");
 					session.setAttribute("Replay",replay);
