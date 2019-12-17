@@ -8,10 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
-/**
- * Referenced from JavaFX-Steganography by MaslovEvgeniy
+/*
+ * Title: JavaFX-Steganography
+ * Author: MaslovEvgeniy
+ * Date: May 18, 2017
+ * Availability: https://github.com/MaslovEvgeniy/JavaFX-Steganography/tree/84c1fdf3d0385b79b1b26ec4172d76fc271b74f5
  */
+
 public class Encoder {
     private final String outPath = System.getProperty("user.dir") + "/WebContent/web/images/tmp/out.png";
 	private int cBit = 7;

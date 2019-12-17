@@ -7,9 +7,11 @@ import java.awt.image.WritableRaster;
 import java.awt.image.DataBufferByte;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
-//Referenced from Steganography by William Wilson
-
+/*
+ * Referenced from Steganography by William Wilson
+ * Date: May 11, 2007
+ * Availability: https://www.dreamincode.net/forums/topic/27950-steganography/
+*/
 public class Steganography {
 	
     private final String outPath = System.getProperty("user.dir") + "/WebContent/web/images/tmp/out.png";
